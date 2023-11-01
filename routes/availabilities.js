@@ -14,11 +14,15 @@ router.post(
       .isInt({ min: 0, max: 2 })
       .withMessage('0以上2以下の数値を指定してください')
       .run(req);
-    await body('candidateId')
+    await param('scheduleId')
+      .isUUID('4')
+      .withMessage('有効なスケジュールIDを指定してください')
+      .run(req);
+    await param('candidateId')
       .isInt()
       .withMessage('有効な候補IDを指定してください')
       .run(req);
-    await body('userId')
+    await param('userId')
       .isInt()
       .custom((value, { req }) => {
         return parseInt(value) === parseInt(req.user.id);
